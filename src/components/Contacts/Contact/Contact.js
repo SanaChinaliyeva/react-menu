@@ -17,10 +17,10 @@ const Contact = props => {
             </div>
             <div className="d-flex justify-content-around">
                 <button
-                    onClick={(e) => props.editClickHandler(e, contact.id)}
+                    onClick={props.editClickHandler}
                     type="button" className="btn btn-secondary"><i className="fas fa-edit"/> Edit</button>
                 <button
-                    onClick={props.deleteClickHanlder}
+                    onClick={(e) => props.deleteClickHanlder(e, contact.id)}
                     type="button" className="btn btn-secondary"><i className="fas fa-trash-alt"/> Delete</button>
             </div>
         </div>

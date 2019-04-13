@@ -1,5 +1,5 @@
 import axios from '../../axios-contacts';
-import {DELETE_CONTACT_SUCCESS, FETCH_CONTACTS_SUCCESS, SET_CURRENT_CONTACT} from "./action-types";
+import {FETCH_CONTACTS_SUCCESS, SET_CURRENT_CONTACT} from "./action-types";
 
 export const fetchContacts = () => {
     return dispatch => {
@@ -22,20 +22,42 @@ export const deleteContact = (e, id) => {
     return dispatch => {
         e.preventDefault();
         axios.delete('/contacts/'+id+'.json').then(() => {
-            dispatch(deleteContactSuccess());
-            fetchContacts();
+            dispatch(setCurrentContact());
+            dispatch(fetchContacts());
         });
     }
 };
 
-export const deleteContactSuccess = () => {
-   return {type: DELETE_CONTACT_SUCCESS};
-};
 
 export const fetchContactsSuccess = (contacts) => {
     return {type: FETCH_CONTACTS_SUCCESS, value: contacts}
 };
 
+export const findCurrentIndex = contactId => {
+   return (dispatch, getState) => {
+       const contacts = getState().contacts;
+       let index = contacts.findIndex(contact => contact.id ===contactId);
+       dispatch(setCurrentContact(index));
+   }
+};
+
 export const setCurrentContact = contactId => {
     return {type: SET_CURRENT_CONTACT, value: contactId || ""}
+};
+
+export const editContact = (id, newContact) => {
+    return dispatch => {
+        axios.put('/contacts/'+id+'.json', newContact).then(() => {
+            dispatch(setCurrentContact());
+            dispatch(fetchContacts());
+        });
+    }
+};
+
+export const addContact = newContact => {
+    return (dispatch)=> {
+        axios.post('/contacts.json', newContact).then(() => {
+            dispatch(fetchContacts());
+        });
+    }
 };

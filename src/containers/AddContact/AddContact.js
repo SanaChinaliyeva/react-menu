@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './AddContact.css';
 import {connect} from "react-redux";
-import {setCurrentContact} from "../../store/actions/actions";
+import {addContact, editContact, setCurrentContact} from "../../store/actions/actions";
 
 class AddContact extends Component {
     state = {
@@ -26,6 +26,17 @@ class AddContact extends Component {
        this.props.history.push('/');
        this.props.onSetCurrentContact();
     };
+
+    handleEditClick = (e) => {
+       e.preventDefault();
+       if (this.props.currentContact) {
+           this.props.onEditContact(this.props.currentContact.id, this.state);
+       } else {
+           this.props.onAddContact(this.state);
+       }
+        this.props.history.push('/');
+    };
+
     render () {
         return (
             <div className="AddContact">
@@ -45,7 +56,7 @@ class AddContact extends Component {
                 <h4>Image preview:</h4>
                 <img className="img-contact border border-dark" src={this.state.image} alt={this.state.name} />
                 <div className="d-flex">
-                    <button type="button" className="btn btn-secondary mr-3">Save</button>
+                    <button type="button" className="btn btn-secondary mr-3" onClick={this.handleEditClick}>Save</button>
                     <button type="button" className="btn btn-secondary" onClick={this.handleBackClick}>Back to contacts</button>
                 </div>
             </div>
@@ -61,7 +72,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
    return {
-       onSetCurrentContact: () => dispatch(setCurrentContact())
+       onSetCurrentContact: () => dispatch(setCurrentContact()),
+       onEditContact: (id, obj) => dispatch(editContact(id, obj)),
+       onAddContact: (obj) => dispatch(addContact(obj))
    }
 };
 

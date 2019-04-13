@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './ContactsBook.css';
 import Contacts from "../../components/Contacts/Contacts";
 import {connect} from "react-redux";
-import {fetchContacts, setCurrentContact, deleteContact} from "../../store/actions/actions";
+import {fetchContacts, deleteContact, findCurrentIndex} from "../../store/actions/actions";
 import Modal from "../../components/UI/Modal/Modal";
 import Contact from "../../components/Contacts/Contact/Contact";
 
@@ -62,8 +62,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchContacts: () => dispatch(fetchContacts()),
-        onFetchContactById: (contactId) => dispatch(setCurrentContact(contactId)),
-        onDeleteContact: (e, id) => dispatch(deleteContact(e, id))
+        onFetchContactById: (contactId) => dispatch(findCurrentIndex(contactId)),
+        onDeleteContact: (e, id) => dispatch(deleteContact(e, id)),
     }
 };
 
