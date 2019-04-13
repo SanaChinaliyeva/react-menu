@@ -4,7 +4,7 @@ import './ContactShort.css';
 const ContactShort = (props) => {
     const contact = props.contact;
     return (
-        <div className="ContactShort d-flex border border-secondary">
+        <div className="ContactShort d-flex border border-secondary" onClick={() => props.clickHandler(contact.id)}>
             <img className="img-thumbnail" src={contact.image} alt={contact.name} />
             <h2 className="align-self-center">{contact.name}</h2>
         </div>
