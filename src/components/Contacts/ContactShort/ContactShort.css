@@ -1,0 +1,11 @@
+.ContactShort {
+    max-height: 100px;
+    margin: 10px auto;
+    padding: 10px;
+    max-width: 70%;
+}
+
+.img-thumbnail {
+    max-width: 100px;
+    margin: 0 20px 0 10px;
+}
